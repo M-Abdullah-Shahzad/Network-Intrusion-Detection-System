@@ -1,16 +1,21 @@
-# Python artifacts
+# Python
 __pycache__/
+*.py[cod]
 .venv/
-env/
 venv/
-
-# Ignore model artifacts and large files
-# models/
-# .pkl
-
-# Jupyter checkpoints
+env/
+.pytest_cache/
 .ipynb_checkpoints/
 
-# OS files
+# Local datasets and generated model artifacts
+data/
+models/
+*.pkl
+*.joblib
+
+# IDE and operating system
+.vscode/
+.idea/
+.DS_Store
 Thumbs.db
 desktop.ini
