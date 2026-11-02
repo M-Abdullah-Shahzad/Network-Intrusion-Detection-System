@@ -30,7 +30,8 @@ def test_prepare_features_drops_targets_and_aligns_one_hot_columns():
     assert "attack_cat" not in aligned.columns
     assert "id" not in aligned.columns
     assert aligned.shape == (1, len(schema))
-    assert (aligned.iloc[0] == 0).all()
+    assert aligned.iloc[0]["dur"] == 0.3
+    assert (aligned.drop(columns=["dur"]).iloc[0] == 0).all()
 
 
 def test_classification_metrics_returns_binary_metrics():
