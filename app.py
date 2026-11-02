@@ -19,7 +19,7 @@ def load_artifacts():
     model_dir = Path(os.getenv("NIDS_MODEL_DIR", "models"))
     required = [
         "scaler.pkl", "kmeans_model.pkl", "knn_model.pkl",
-        "naive_bayes_model.pkl", "feature_columns.json", "metrics.json",
+        "naive_bayes_model.pkl", "feature_columns.json", "raw_feature_columns.json", "metrics.json",
     ]
     missing = [name for name in required if not (model_dir / name).is_file()]
     if missing:
@@ -30,6 +30,7 @@ def load_artifacts():
         "knn": joblib.load(model_dir / "knn_model.pkl"),
         "naive_bayes": joblib.load(model_dir / "naive_bayes_model.pkl"),
         "feature_columns": json.loads((model_dir / "feature_columns.json").read_text(encoding="utf-8")),
+        "raw_feature_columns": json.loads((model_dir / "raw_feature_columns.json").read_text(encoding="utf-8")),
         "metrics": json.loads((model_dir / "metrics.json").read_text(encoding="utf-8")),
     }
 
@@ -76,6 +77,15 @@ with tab_inspector:
     if uploaded is not None:
         try:
             raw = pd.read_csv(uploaded)
+            missing_columns = [
+                column for column in artifacts["raw_feature_columns"]
+                if column not in raw.columns
+            ]
+            if missing_columns:
+                raise ValueError(
+                    "CSV is missing required UNSW-NB15 feature columns: "
+                    + ", ".join(missing_columns[:12])
+                )
             features = prepare_features(raw, artifacts["feature_columns"])
             scaled = artifacts["scaler"].transform(features)
 
