@@ -32,6 +32,9 @@ def main() -> None:
     y_train = pd.to_numeric(train_df["label"], errors="raise").astype(int)
     y_test = pd.to_numeric(test_df["label"], errors="raise").astype(int)
 
+    raw_feature_columns = list(
+        train_df.drop(columns=["id", "label", "attack_cat"], errors="ignore").columns
+    )
     X_train = prepare_features(train_df)
     feature_columns = list(X_train.columns)
     X_test = prepare_features(test_df, feature_columns)
@@ -75,6 +78,9 @@ def main() -> None:
     joblib.dump(scaler, output_dir / "scaler.pkl")
     (output_dir / "feature_columns.json").write_text(
         json.dumps(feature_columns, indent=2), encoding="utf-8"
+    )
+    (output_dir / "raw_feature_columns.json").write_text(
+        json.dumps(raw_feature_columns, indent=2), encoding="utf-8"
     )
     (output_dir / "metrics.json").write_text(
         json.dumps(metrics, indent=2), encoding="utf-8"
