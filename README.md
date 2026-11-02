@@ -24,6 +24,8 @@ Optional environment variables: NIDS_TRAIN_PATH, NIDS_TEST_PATH, and NIDS_MODEL_
 
 ## Install
 
+Use Python 3.10 or newer.
+
     python -m venv .venv
     # Windows PowerShell
     .\.venv\Scripts\Activate.ps1
