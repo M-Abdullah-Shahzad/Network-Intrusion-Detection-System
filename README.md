@@ -37,7 +37,7 @@ Optional environment variables: NIDS_TRAIN_PATH, NIDS_TEST_PATH, and NIDS_MODEL_
 
 The script fits the scaler and models using the training CSV, aligns the test CSV to the training one-hot feature columns, and calculates accuracy, precision, recall, and F1 on the held-out test CSV.
 
-It creates local files under models/: scaler.pkl, knn_model.pkl, naive_bayes_model.pkl, kmeans_model.pkl, feature_columns.json, and metrics.json. These generated artifacts are ignored by Git. The large KNN model is not stored in the repository.
+It creates local files under models/: scaler.pkl, knn_model.pkl, naive_bayes_model.pkl, kmeans_model.pkl, feature_columns.json, raw_feature_columns.json, and metrics.json. These generated artifacts are ignored by Git. The large KNN model is not stored in the repository.
 
 ## Run the dashboard
 
@@ -55,6 +55,10 @@ For supervised KNN and Naive Bayes outputs, label 1 is displayed as Attack and 0
 - comparison.ipynb
 
 Run notebooks from the repository root after placing the CSV files in data/.
+
+## Tests
+
+Install development dependencies and run `python -m pytest -q`.
 
 ## Methodology notes and limitations
 
